@@ -1,0 +1,33 @@
+version: 1
+frontend:
+ phases:
+   preBuild:
+     commands:
+       - yarn install
+   build:
+     commands:
+       - yarn build
+ artifacts:
+   baseDirectory: /dist
+   files:
+     - "**/*"
+ cache:
+   paths:
+     - node_modules/**/*
+test:
+ phases:
+   preTest:
+     commands:
+       - yarn install
+       - yarn add cypress@10.10.0
+   test:
+     commands:
+       - npx start-server-and-test 'npm start' 3000 &
+       - npx cypress run --component
+ artifacts:
+   baseDirectory: cypress
+   configFilePath: '**/mochawesome.json'
+   files:
+     - '**/*.png'
+     - '**/*.mp4'
+     - '**/*.mp4'
